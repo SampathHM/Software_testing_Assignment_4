@@ -46,4 +46,21 @@ describe("Dog API Tests", () => {
       expect(typeof response.body.data.imageUrl).toBe("string");
     });
   });
+
+  describe("Test 2: Negative API test - Invalid route", () => {
+    it("should return 404 status code", async () => {
+      const response = await request(app).get("/api/dogs/invalid");
+      expect(response.status).toBe(404);
+    });
+
+    it("should return error message", async () => {
+      const response = await request(app).get("/api/dogs/invalid");
+      expect(response.body.error).toBeDefined();
+    });
+
+    it("should have correct error message", async () => {
+      const response = await request(app).get("/api/dogs/invalid");
+      expect(response.body.error).toBe("Route not found");
+    });
+  });
 });
