@@ -46,4 +46,19 @@ test.describe('Dog App E2E Tests', () => {
     expect(newSrc).toMatch(/^https:\/\//);
   });
 
+  test('Test 5: Error is displayed when API call fails', async ({ page }) => {
+    // Abort the API call to simulate failure
+    await page.route('**/api/dogs/random', route => route.abort());
+    
+    // Go to the page
+    await page.goto('/');
+    
+    // Wait for error to appear
+    await page.waitForTimeout(1000);
+    
+    // Check that page has an element containing word "error" (case insensitive)
+    const errorElement = page.locator('text=/error/i');
+    await expect(errorElement).toBeVisible();
+  });
+
 });
