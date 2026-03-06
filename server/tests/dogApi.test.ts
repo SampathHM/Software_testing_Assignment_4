@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api/dogs", dogRoutes);
 
 // 404 handler for invalid routes
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({
     success: false,
     error: "Route not found",
